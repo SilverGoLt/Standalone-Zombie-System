@@ -82,7 +82,8 @@ Citizen.CreateThread(function()
 	        repeat
 	            if IsPedHuman(Zombie) and not IsPedAPlayer(Zombie) and not IsPedDeadOrDying(Zombie, true) then
 	                local pedcoords = GetEntityCoords(Zombie)
-	                local distance = Vdist(zone.x, zone.y, zone.z, pedcoords.x, pedcoords.y, pedcoords.z)
+			local zonec = vector3(zone.x, zone.y, zone.z)
+	                local distance = #(zonec - pedcoords)
 
 	                if distance <= zone.radius then
 	                    DeleteEntity(Zombie)
@@ -144,7 +145,8 @@ Citizen.CreateThread(function()
 
 	            local PlayerCoords = GetEntityCoords(PlayerPedId())
 	            local PedCoords = GetEntityCoords(Zombie)
-	            local Distance = Vdist(PlayerCoords.x, PlayerCoords.y, PlayerCoords.z, PedCoords.x, PedCoords.y, PedCoords.z)
+			--Better Performance against Vdist
+	            local Distance = #(PedCoords - PlayerCoords)
 	            local DistanceTarget
 
 	           	if IsPlayerShooting() then
